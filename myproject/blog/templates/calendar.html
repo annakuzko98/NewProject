@@ -1,0 +1,20 @@
+{% for week in weeks %}
+    <tr>
+        {% for day_plans in week %}
+            <td>
+                {% for plan in day_plans %}
+                    <input type="checkbox" class="form-check-input" id="completedCheckbox{{ plan.id }}" {% if plan.completed %}checked{% endif %} disabled>
+                    <label class="form-check-label {% if plan.completed %}completed{% endif %}" for="completedCheckbox{{ plan.id }}"></label>
+                    <a href="{% url 'blog:view_daily_plan' plan_id=plan.id %}">{{ plan.plan_name }}</a>
+                    <br>
+                    Date: {{ plan.plan_date }}, Time: {{ plan.plan_time }}
+                    <br>
+                {% empty %}
+                    {% if day_plans is not None %}
+                        <a href="{% url 'blog:create_daily_plan' %}?date={{ day_plans.0.plan_date|date:'Y-m-d' %}" class="btn btn-primary">Create New Plan</a>
+                    {% endif %}
+                {% endfor %}
+            </td>
+        {% endfor %}
+    </tr>
+{% endfor %}

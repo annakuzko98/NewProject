@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block head_title %}Plan List{% endblock head_title %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <h1 style="color: orange; text-align: left">Plan List</h1>
+                <ul class="list-group">
+                    {% for date in dates_with_plans %}
+                        <li class="list-group-item">
+                            <h3 style="border-left: 2px solid orange; padding-left: 10px;">
+                                <a href="{% url 'blog:daily_plans_by_date' date=date %}">{{ date }}</a>
+                            </h3>
+
+                            <ul class="list-group">
+                                {% for plan in plans_for_date %}
+                                    {% if plan.plan_date == date %}
+                                        <li class="list-group-item">
+                                            <input type="checkbox" class="form-check-input" id="completedCheckbox{{ plan.id }}" {% if plan.completed %}checked{% endif %} disabled>
+                                            <label class="form-check-label {% if plan.completed %}completed{% endif %}" for="completedCheckbox{{ plan.id }}"></label>
+                                            <a href="{% url 'blog:view_daily_plan' plan_id=plan.id %}">{{ plan.plan_name }}</a>
+                                            <br>
+                                            Date: {{ plan.plan_date }}, Time: {{ plan.plan_time }}
+                                            <br>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'blog:create_daily_plan' %}" class="btn btn-outline-warning">Create New Plan</a>
+                <a href="{% url 'blog:main' %}" class="btn btn-outline-warning">Main Page</a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

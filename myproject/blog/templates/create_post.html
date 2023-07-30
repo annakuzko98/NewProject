@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block head_title %}{{ title }}{% endblock head_title %}
+{% block content %}
+<div class="container">
+    <div class="col-md-6 mx-auto">
+        <h1 style="color: darkblue; text-align: left">{{ title }}</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <h2 for="id_for_label" class="col-form-label" style="color:darkblue">Name:</h2>
+                <input type="text" id="id_post_name" name="post_name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <h2 for="id_post_description" class="col-form-label" style="color:darkblue">Description:</h2>
+                <textarea id="id_post_description" name="post_description" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+                <h2 for="id_post_date" class="col-form-label" style="color:darkblue">Date:</h2>
+                <input type="date" id="id_post_date" name="post_date" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <h2 for="id_post_time" class="col-form-label" style="color:darkblue">Time:</h2>
+                <input type="time" id="id_post_time" name="post_time" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <h2 for="id_Feeling" class="col-form-label" style="color:darkblue">Feeling</h2>
+                <select id="id_Feeling" name="Feeling" class="form-select">
+                    <option value="" selected disabled>Choose</option>
+                    {% for value, label in form.Feeling.field.choices %}
+                        <option value="{{ value }}" {% if value == form.Feeling.value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <div>
+                    <button type="submit" class="btn btn-outline-primary">Create post</button>
+                    <a href="{% url 'blog:blog_post' %}" class="btn btn-outline-secondary">Back</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

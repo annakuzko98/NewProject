@@ -1,0 +1,29 @@
+
+
+{% extends 'base.html' %}
+{% block head_title %}Plans for {{ selected_date }}{% endblock head_title %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <h1 style="color:navy; text-align: left">Plans for {{ selected_date }}</h1>
+                <ul class="list-group">
+                    {% for plan in plans_for_date %}
+                        <li class="list-group-item">
+                            <input type="checkbox" class="form-check-input" id="completedCheckbox{{ plan.id }}" {% if plan.completed %}checked{% endif %} disabled>
+                            <label class="form-check-label {% if plan.completed %}completed{% endif %}" for="completedCheckbox{{ plan.id }}"></label>
+                            <a href="{% url 'blog:view_daily_plan' plan_id=plan.id %}">{{ plan.plan_name }}</a>
+                            <br>
+                            <div style="color: navy">
+                                Date: {{ plan.plan_date }}, Time: {{ plan.plan_time }}
+                            </div>
+                                <br>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'blog:create_daily_plan' %}" class="btn btn-outline-primary">Create New Plan</a>
+                 <a href="{% url 'blog:list_daily_plans' %}" class="btn btn-outline-secondary">Back</a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

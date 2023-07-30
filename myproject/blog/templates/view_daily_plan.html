@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block head_title %}{{ daily_plan.plan_name }}{% endblock head_title %}
+{% block content %}
+<div class="container">
+    <div class="col-md-6 mx-auto">
+        <div class="rounded border p-3">
+            <h1 style="color: deepskyblue; text-align: left">{{ daily_plan.plan_name }}</h1>
+            <form method="post" enctype="multipart/form-data" action="{% url 'blog:view_daily_plan' plan_id=daily_plan.id %}">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="{{ form.plan_name.id_for_label }}" class="col-sm-4 col-form-label text-right">Plan name:</label>
+                    <div class="col-sm-8">
+                        {{ form.plan_name }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="{{ form.plan_description.id_for_label }}" class="col-sm-4 col-form-label text-right">Plan description:</label>
+                    <div class="col-sm-8">
+                        {{ form.plan_description }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="{{ form.plan_date.id_for_label }}" class="col-sm-4 col-form-label text-right">Plan date:</label>
+                    <div class="col-sm-8">
+                        {{ form.plan_date }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="{{ form.plan_time.id_for_label }}" class="col-sm-4 col-form-label text-right">Plan time:</label>
+                    <div class="col-sm-8">
+                        {{ form.plan_time }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="{{ form.completed.id_for_label }}" class="col-sm-4 col-form-label text-right">Completed:</label>
+                    <div class="col-sm-8">
+                        {{ form.completed }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-8 offset-sm-4">
+                        <button type="submit" class="btn btn-outline-info">Save</button>
+                        <a href="{% url 'blog:list_daily_plans' %}" class="btn btn-outline-info">Plan list</a>
+                        <a href="{% url 'blog:daily_plans_by_date' date=daily_plan.plan_date %}" class="btn btn-outline-info">Daily Plan by {{ daily_plan.plan_date }}</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
